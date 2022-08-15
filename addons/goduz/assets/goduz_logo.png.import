@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://budjavweih2w3"
-path="res://.godot/imported/icons8-refresh-30.png-3f3a106c233321be1b5771711cf33057.ctex"
+uid="uid://knkb4gnnfl4f"
+path="res://.godot/imported/goduz_logo.png-39521936030003d3daadb5061c2e433c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://guidot/assets/icons8-refresh-30.png"
-dest_files=["res://.godot/imported/icons8-refresh-30.png-3f3a106c233321be1b5771711cf33057.ctex"]
+source_file="res://addons/goduz/assets/goduz_logo.png"
+dest_files=["res://.godot/imported/goduz_logo.png-39521936030003d3daadb5061c2e433c.ctex"]
 
 [params]
 

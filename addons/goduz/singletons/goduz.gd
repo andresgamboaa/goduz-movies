@@ -1,8 +1,9 @@
 extends Node
+# Author: Andres Gamboa
+
 
 # Methods to render and update the view.
 
-# custom components are just called Components for simplicity
 func diff(current:BaseComponent, next:BaseComponent) -> void:
 	if current is BasicComponent and next is BasicComponent:
 		diff_basic(current, next)
@@ -10,7 +11,7 @@ func diff(current:BaseComponent, next:BaseComponent) -> void:
 	elif current is BasicComponent and not next is BasicComponent:
 		change_basic_for_custom(current, next)
 		
-	elif not current is BasicComponent and not next is BasicComponent: 
+	elif not (current is BasicComponent and next is BasicComponent): 
 		diff_custom(current, next)
 		
 	elif not current is BasicComponent and next is BasicComponent:
@@ -43,9 +44,6 @@ func change_basic_for_custom(current:BasicComponent, next:Component) -> void:
 	for child in next.get_view().get_children():
 		render(next_control, child)
 	
-	if next_control is SmoothScrollContainer:
-		next_control.c_ready()
-	
 	next.get_parent().remove_child(next)
 	next_view.get_parent().remove_child(next_view)
 	
@@ -75,7 +73,6 @@ func change_custom_for_basic(current:Component, next:BasicComponent) -> void:
 			old.get_v_scroll_bar().queue_free()
 		
 		current.get_view().control.replace_by(new)
-		
 		old.queue_free()
 		next_control = new
 		
@@ -85,16 +82,12 @@ func change_custom_for_basic(current:Component, next:BasicComponent) -> void:
 	for child in next.get_children():
 		render(current.get_view().control, child)
 	
-	if next_control is SmoothScrollContainer:
-		next_control.ready()
-	
 	next.get_parent().remove_child(next)
-	current.container.queue_free()
-	current.control.queue_free()
+	current.container.free()
+	current.control.free()
 	current.replace_by(next)
 	next.control = next_control
 	current.queue_free()
-
 
 # Checks if a the current BasicComponent has changed and updates it if that is the case.
 func diff_basic(current:BasicComponent, next:BasicComponent) -> void:
@@ -107,6 +100,7 @@ func diff_basic(current:BasicComponent, next:BasicComponent) -> void:
 	var current_children = current.get_children()
 	var next_children = next.get_children()
 	
+	# Can the children be checked with threads?
 	for i in range(0,  current_children.size()):
 		if next_children[i].type != "_omit_":
 			diff(current_children[i], next_children[i])
@@ -139,9 +133,6 @@ func change_basic_for_dif_basic(current:BasicComponent, next:BasicComponent) -> 
 		next.remove_child(child)
 		add_child(child)
 	
-	if new is SmoothScrollContainer:
-		new.c_ready()
-	
 	next.queue_free()
 
 
@@ -159,23 +150,13 @@ func change_custom_for_dif_custom(current:Component, next:Component) -> void:
 	
 	var child_of_container = old_control.get_parent() is Container
 	
-	var new_control
-
-	new_control = create_control(next_view.type, next_view.props,child_of_container)
+	var new_control = create_control(next_view.type, next_view.props,child_of_container)
 	current_view.control.replace_by(new_control)
 	next_control = new_control
-	
-	if old_control is ScrollContainer:
-		old_control.get_h_scroll_bar().queue_free()
-		old_control.get_v_scroll_bar().queue_free()
-		
 	old_control.queue_free()
 	
 	for child in next.get_view().get_children():
 		render(next_control, child)
-		
-	if next_control is SmoothScrollContainer:
-		next_control.c_ready()
 	
 	var c_parent = current.parent_control
 	var container = current.container
@@ -239,6 +220,7 @@ func update_list(current:BasicComponent, next:BasicComponent) -> void:
 			for child in next_ch.get_children():
 				next_ch_children.append(child)
 				next_ch.remove_child(child)
+			# this component is new. omit when checking for changes
 			next_ch.replace_by(BasicComponent.new({}, "_omit_", []))
 			current.add_child(next_ch)
 			for child in next_ch_children:
@@ -271,8 +253,6 @@ func render(parent:Control, component:BaseComponent) -> void:
 		parent.add_child(component.control)
 		for child in component.get_children():
 			render(component.control, child)
-		if component.control is SmoothScrollContainer:
-			component.control.c_ready()
 	else:
 		component.complete()
 		component.parent_control = parent
@@ -286,7 +266,7 @@ func create_control(type:String, properties:Dictionary,child_of_container) -> Co
 	var node:Control
 	match  type:
 		"control"        :node = Control.new()
-		"container"      :node = PanelContainer.new()
+		"panel_container"      :node = PanelContainer.new()
 		"aspect_radio"   :node = AspectRatioContainer.new()
 		"center"         :node = CenterContainer.new()
 		"hbox"           :node = HBoxContainer.new()
@@ -298,9 +278,8 @@ func create_control(type:String, properties:Dictionary,child_of_container) -> Co
 		"hsplit"         :node = HSplitContainer.new()
 		"vsplit"         :node = VSplitContainer.new()
 		"margin"         :node = MarginContainer.new()
-		"panel_container":node = PanelContainer.new()
+		"panel":         node = Panel.new()
 		"scrollbox"      :node = ScrollContainer.new()
-		"smoothscrollbox":node = SmoothScrollContainer.new()
 		"subviewport"    :
 			node = SubViewportContainer.new()
 			node.add_child(SubViewport.new())

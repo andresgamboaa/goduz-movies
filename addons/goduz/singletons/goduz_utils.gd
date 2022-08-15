@@ -1,5 +1,5 @@
-@tool
 extends Node
+# Author: Andres Gamboa
 
 const EXCEPTIONS = [
 	"name",

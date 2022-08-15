@@ -1,6 +1,6 @@
 extends Node
-
-class_name BaseComponent
+class_name BaseComponent, "res://addons/goduz/assets/goduz_icon.svg"
+# Author: Andres Gamboa
 
 # There are two types of components:
 # BasicComponents: 
@@ -26,7 +26,7 @@ func _init():
 func get_data():
 	pass
 
-func component_ready():
+func ready():
 	pass
 
 func get_control(_value):

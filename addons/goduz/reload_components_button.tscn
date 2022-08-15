@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/goduz/reload_components.gd" id="1_f5mnp"]
+
+[node name="ReloadComponents" type="Button"]
+modulate = Color(1, 1, 1, 0.462745)
+offset_right = 75.0
+offset_bottom = 31.0
+scale = Vector2(0.8, 0.8)
+hint_tooltip = "Reload Components"
+mouse_default_cursor_shape = 2
+text = "Reload"
+script = ExtResource("1_f5mnp")
+
+[connection signal="pressed" from="." to="." method="_on_reload_components_pressed"]

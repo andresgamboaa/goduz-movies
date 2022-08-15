@@ -1,11 +1,11 @@
-extends BaseRootComponent
-class_name RootComponent
+extends Component
+class_name Movies
 
 func _init():
-	super()
-	presets_path = "res://styles.tscn"
+	super("movies")
 	state = {
 		movies = []
+#		error = ""
 	}
 
 func component_ready():
@@ -14,16 +14,25 @@ func component_ready():
 	http_request.request_completed.connect(http_request_completed)
 	var error = http_request.request("https://imdb-api.com/en/API/Top250Movies/k_fw327m7w")
 	if error != OK:
-		state.error ="An error occurred in the HTTP request."
+		print("error found on request")
+#		state.error ="An error occurred in the HTTP request."
+#		update_view()
 
 
-func http_request_completed(_result, _response_code, _headers, body):
+func http_request_completed(result, _response_code, _headers, body):
+	if result != HTTPRequest.RESULT_SUCCESS:
+		state.error = "Image couldn't be downloaded. Try a different image."
+		update_view()
+		return
 	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
+	var error = json.parse(body.get_string_from_utf8())
+#	if error != OK:
+#		state.error = "An error occurred"
+#		update_view()
+#		return
 	var response = json.get_data()
 	state.movies = response.items
 	update_view()
-
 
 func view():
 	return Gui.scrollbox({preset="full"},[

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://yj1trr41hd52"]
 
 [ext_resource type="FontFile" uid="uid://be6arjsnp4kyx" path="res://assets/fonts/Quicksand-Regular.ttf" id="1_fva84"]
-[ext_resource type="Script" path="res://guidot/root_component.gd" id="1_q8a7m"]
-[ext_resource type="PackedScene" uid="uid://bg0ebiy2lyo0j" path="res://guidot/reload_components_button.tscn" id="2_yrrnm"]
+[ext_resource type="Script" path="res://addons/goduz/classes/root_component.gd" id="2_sk5fv"]
+[ext_resource type="PackedScene" path="res://addons/goduz/reload_components_button.tscn" id="3_ipjdn"]
 
 [sub_resource type="Theme" id="Theme_myren"]
 default_font = ExtResource("1_fva84")
@@ -19,14 +19,14 @@ anchor_bottom = 1.0
 color = Color(0.117647, 0.117647, 0.117647, 1)
 
 [node name="RootComponent" type="Node" parent="."]
-script = ExtResource("1_q8a7m")
+script = ExtResource("2_sk5fv")
 
-[node name="ReloadComponents" parent="." instance=ExtResource("2_yrrnm")]
+[node name="ReloadComponents" parent="." instance=ExtResource("3_ipjdn")]
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.9999
-offset_top = 15.0
-offset_right = -10.9999
-offset_bottom = 45.0
+offset_left = -64.9999
+offset_top = 6.0
+offset_right = 10.0
+offset_bottom = 37.0
 grow_horizontal = 0
 metadata/_edit_layout_mode = 1

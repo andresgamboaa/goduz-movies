@@ -1,13 +1,14 @@
-extends BaseComponent
+class_name Component extends BaseComponent
+# Author: Andres Gamboa
 
-class_name Component
-
-var state:Dictionary = {}:
-	set(value):
-		var call_update_gui = state != {}
-		state = value
-		if call_update_gui:
-			update_view()
+var state: Dictionary = {}
+# Setter not working as expected, it used to work on alpha 10
+#	get:
+#		return state
+#	set(value):
+#		var update = state != {}
+#		state = value
+#		if update: update_view()
 
 var container
 var parent_control
@@ -25,7 +26,7 @@ func _init(_type:String, _props:Dictionary={}):
 
 # __________________
 # Completes the tree of the component.
-func complete():
+func complete() -> void:
 	container.add_child(view())
 
 # The representation of the Graphical User Interface (the view composed of control nodes) of the component.
@@ -42,10 +43,7 @@ func get_view() -> BasicComponent:
 
 # Compares the current gui of the component agains the updated gui to make the necessary changes to control nodes.
 func update_view() -> void:
-	var time_before = Time.get_ticks_msec()
-	Guidot.diff(self.get_view(), view())
-	var total_time = Time.get_ticks_msec() - time_before
-	print("Time taken to update "+ type + ": " + str(total_time) +"ms")
+	Goduz.diff(self.get_view(), view())
 
 
 # Lifecycle methods
@@ -60,22 +58,22 @@ func component_will_die():
 
 
 # For Debug porpuses
-func get_data():
-	# Return the component tree as a dictionary.
-	var data = {
-		"type": type,
-		"props": props,
-		"control": control,
-		"container": container,
-		"parent_control": parent_control,
-		"children": get_view().get_data(),
-	}
-	return data
+#func get_data():
+#	# Return the component tree as a dictionary.
+#	var data = {
+#		"type": type,
+#		"props": props,
+#		"control": control,
+#		"container": container,
+#		"parent_control": parent_control,
+#		"children": get_view().get_data(),
+#	}
+#	return data
 
 
-func get_control(value) -> Control:
+func get_control(id) -> Control:
 	var _gui = get_view()
 	if _gui.props.has("id"):
-		if _gui.props.id == value:
+		if _gui.props.id == id:
 			return _gui.control
-	return _gui.get_control(value)
+	return _gui.get_control(id)

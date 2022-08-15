@@ -1,6 +1,6 @@
 extends BaseComponent
-
 class_name BasicComponent
+# Author: Andres Gamboa
 
 var list = false
 var key = null
@@ -19,27 +19,27 @@ func _init(_props:Dictionary, _type:String, children:Array):
 		add_child(child)
 
 
-func get_control(value):
+func get_control(id) -> Control:
 	for child in get_children():
 		if child.props.has("id"):
-			if child.props.id == value:
+			if child.props.id == id:
 				return child.control
-		var found = child.get_control(value)
+		var found = child.get_control(id)
 		if found:
 			return found
 	return null
 
 
-func get_data():
-	var children_data = []
-	for child in get_children():
-		children_data.append(child.get_data())
-
-	var data = {
-		"type": type,
-		"props": props,
-		"children": children_data,
-		"control": control,
-		"parent": control.get_parent()
-	}
-	return data
+#func get_data():
+#	var children_data = []
+#	for child in get_children():
+#		children_data.append(child.get_data())
+#
+#	var data = {
+#		"type": type,
+#		"props": props,
+#		"children": children_data,
+#		"control": control,
+#		"parent": control.get_parent()
+#	}
+#	return data

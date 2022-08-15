@@ -18,7 +18,7 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_kpncx")
 HFlowContainer/constants/h_separation = 20
 HFlowContainer/constants/v_separation = 20
 
-[node name="_styles" type="Control"]
+[node name="_presets" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 

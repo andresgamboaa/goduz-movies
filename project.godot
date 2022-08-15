@@ -12,46 +12,52 @@ _global_script_classes=[{
 "base": "Node",
 "class": &"BaseComponent",
 "language": &"GDScript",
-"path": "res://guidot/base_component.gd"
+"path": "res://addons/goduz/classes/base_component.gd"
 }, {
 "base": "Component",
 "class": &"BaseRootComponent",
 "language": &"GDScript",
-"path": "res://guidot/base_root_component.gd"
+"path": "res://addons/goduz/classes/base_root_component.gd"
 }, {
 "base": "BaseComponent",
 "class": &"BasicComponent",
 "language": &"GDScript",
-"path": "res://guidot/basic_component.gd"
+"path": "res://addons/goduz/classes/basic_component.gd"
 }, {
 "base": "BaseComponent",
 "class": &"Component",
 "language": &"GDScript",
-"path": "res://guidot/component.gd"
+"path": "res://addons/goduz/classes/component.gd"
+}, {
+"base": "Component",
+"class": &"Counter",
+"language": &"GDScript",
+"path": "res://addons/goduz/example/counter.gd"
 }, {
 "base": "Component",
 "class": &"Movie",
 "language": &"GDScript",
 "path": "res://components/movie.gd"
 }, {
+"base": "Component",
+"class": &"Movies",
+"language": &"GDScript",
+"path": "res://components/movies.gd"
+}, {
 "base": "BaseRootComponent",
 "class": &"RootComponent",
 "language": &"GDScript",
-"path": "res://guidot/root_component.gd"
-}, {
-"base": "ScrollContainer",
-"class": &"SmoothScrollContainer",
-"language": &"GDScript",
-"path": "res://guidot/new_script.gd"
+"path": "res://addons/goduz/classes/root_component.gd"
 }]
 _global_script_class_icons={
-"BaseComponent": "",
+"BaseComponent": "res://addons/goduz/assets/goduz_icon.svg",
 "BaseRootComponent": "",
 "BasicComponent": "",
 "Component": "",
+"Counter": "",
 "Movie": "",
-"RootComponent": "",
-"SmoothScrollContainer": ""
+"Movies": "",
+"RootComponent": ""
 }
 
 [application]
@@ -63,6 +69,10 @@ run/low_processor_mode=true
 
 [autoload]
 
-Utils="*res://guidot/utils.gd"
-Gui="*res://guidot/gui.gd"
-Guidot="*res://guidot/guidot.gd"
+Goduz="*res://addons/goduz/singletons/goduz.gd"
+Gui="*res://addons/goduz/singletons/gui.gd"
+GoduzUtils="*res://addons/goduz/singletons/goduz_utils.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/goduz/plugin.cfg")
